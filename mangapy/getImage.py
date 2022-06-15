@@ -3,7 +3,7 @@ import requests
 import shutil
 
 
-current_dir = os.getcwd()
+root_dir = os.getcwd()
 
 
 def get_image(gi_url: object, gi_download_path: str, gi_current_chapter: int, gi_current_image: int) -> bool:
@@ -16,7 +16,7 @@ def get_image(gi_url: object, gi_download_path: str, gi_current_chapter: int, gi
         print(f"IMAGE {gi_current_image} FROM CHAPTER {gi_current_chapter} HAS BEEN DOWNLOADED!")
         return True
     else:
-        print(f"ALL IMAGES HAVE BEEN DOWNLOADED!\n")
+        print(f"ALL IMAGES FROM CHAPTER {gi_current_chapter} HAVE BEEN DOWNLOADED!\n")
         return False
 
 
@@ -66,9 +66,9 @@ def download():
         # If the current chapter exists
         else:
             # Defining the current image
-            current_image = int(1)
+            current_image = int(0)
             # Creating a new directory to store the current chapter
-            os.mkdir(fr"{current_dir}/chapter {current_chapter}")
+            os.mkdir(fr"{root_dir}/chapter {current_chapter}")
             while True:
                 # Using the image_treatment function to organize our url
                 url_image = image_treatment(url, current_chapter, current_image)
@@ -76,7 +76,7 @@ def download():
                 request_to_image = requests.get(url_image, stream=True)
                 # Trying to get image based on treated url, directory, current chapter and current image
                 try:
-                    ret_get_image = get_image(request_to_image, fr"{current_dir}/chapter {current_chapter}",
+                    ret_get_image = get_image(request_to_image, fr"{root_dir}/chapter {current_chapter}",
                                               current_chapter, current_image)
                     # If get_image return is false, we should stop the program
                     if ret_get_image == False:
